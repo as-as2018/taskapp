@@ -18,22 +18,49 @@
 
 <script>
 import StateCard from '@components/StateCard.vue';
+import { mapState } from 'pinia';
+import useTaskStore from '@stores/TaskStore';
 
 export default {
   name: 'StatsView',
-  components: {
-    StateCard
-  },
-  data() {
-    return {
-      stats: [
-        { number: 12, label: 'Total Tasks', icon: 'mdi:clipboard-list', bgColor: 'var(--color-primary)', textColor: 'var(--color-surface)' },
-        { number: 8, label: 'Completed', icon: 'mdi:check-circle', bgColor: 'var(--color-primary)', textColor: 'var(--color-surface)' },
-        { number: 3, label: 'Pending', icon: 'mdi:clock-outline', bgColor: 'var(--color-primary)', textColor: 'var(--color-surface)' },
-        { number: 1, label: 'Overdue', icon: 'mdi:alert', bgColor: 'var(--color-primary)', textColor: 'var(--color-surface)' },
-        { number: 5, label: 'Completed Today', icon: 'mdi:calendar-today', bgColor: 'var(--color-primary)', textColor: 'var(--color-surface)' },
-        { number: 9, label: 'Completed This Week', icon: 'mdi:calendar-week', bgColor: 'var(--color-primary)', textColor: 'var(--color-surface)' }
-      ]
+  components: { StateCard },
+
+  computed: {
+    ...mapState(useTaskStore, ['tasks']),
+
+    stats() {
+      const now = new Date();
+      const todayDate = now.toISOString().split('T')[0];
+
+      const totalTasks = this.tasks.length;
+      const completed = this.tasks.filter(t => t.status === 'Completed').length;
+      const pending = this.tasks.filter(t => t.status === 'Pending').length;
+
+      const overdue = this.tasks.filter(t => {
+        if (!t.dueDate) return false;
+        return new Date(t.dueDate) < now && t.status !== 'Completed';
+      }).length;
+
+      const completedToday = this.tasks.filter(t => {
+        return t.status === 'Completed' && t.completedDate === todayDate;
+      }).length;
+
+      const weekStart = new Date(now);
+      weekStart.setDate(weekStart.getDate() - weekStart.getDay()); // start of week
+      const completedThisWeek = this.tasks.filter(t => {
+        if (t.status !== 'Completed' || !t.completedDate) return false;
+        const date = new Date(t.completedDate);
+        return date >= weekStart;
+      }).length;
+
+      return [
+        { number: totalTasks, label: 'Total Tasks', icon: 'mdi:clipboard-list', bgColor: 'var(--color-primary)', textColor: 'var(--color-surface)' },
+        { number: completed, label: 'Completed', icon: 'mdi:check-circle', bgColor: 'var(--color-primary)', textColor: 'var(--color-surface)' },
+        { number: pending, label: 'Pending', icon: 'mdi:clock-outline', bgColor: 'var(--color-primary)', textColor: 'var(--color-surface)' },
+        { number: overdue, label: 'Overdue', icon: 'mdi:alert', bgColor: 'var(--color-primary)', textColor: 'var(--color-surface)' },
+        { number: completedToday, label: 'Completed Today', icon: 'mdi:calendar-today', bgColor: 'var(--color-primary)', textColor: 'var(--color-surface)' },
+        { number: completedThisWeek, label: 'Completed This Week', icon: 'mdi:calendar-week', bgColor: 'var(--color-primary)', textColor: 'var(--color-surface)' }
+      ];
     }
   }
 }
