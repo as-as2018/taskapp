@@ -3,8 +3,8 @@
     <h2 class="font-bold text-lg mb-4 text-text">{{ title }}</h2>
 
 
-    <BoardCard v-for="value in localCards" :task="value" />
-  
+    <BoardCard v-for="value in localCards" :task="value" @update="emitUpdate" />
+
 
   </div>
 </template>
@@ -32,8 +32,8 @@ export default {
     }
   },
   methods: {
-    emitUpdate() {
-      this.$emit("update-cards", this.localCards);
+    emitUpdate(task) {
+      this.$emit("update-cards", task);
     }
   }
 };

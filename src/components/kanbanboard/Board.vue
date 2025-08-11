@@ -5,7 +5,7 @@
       :key="col.id"
       :title="col.title"
       :cards="col.cards"
-      @update-cards="updateColumnCards(col.id, $event)"
+      @update-cards="updateColumnCards"
     />
   </div>
 </template>
@@ -34,11 +34,11 @@ export default {
   },
   emits: ["update:columns"],
   methods: {
-    updateColumnCards(columnId, newCards) {
-      const updated = this.columns.map(col =>
-        col.id === columnId ? { ...col, cards: newCards } : col
-      );
-      this.$emit("update:columns", updated);
+    updateColumnCards(selectedCard) {
+      // const updated = this.columns.map(col =>
+      //   col.id === columnId ? { ...col, cards: newCards } : col
+      // );
+      this.$emit("update:columns", selectedCard);
     }
   },
   beforeMount() {

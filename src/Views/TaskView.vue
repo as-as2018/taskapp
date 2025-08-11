@@ -101,9 +101,10 @@ export default {
       task.id && this.deleteTask(task.id);
       
     },
-    updateColumns(columns) {
+    updateColumns(selectedCard) {
       // Handle column updates if needed
-      console.log('Columns updated:', columns);
+      console.log('Columns updated:', selectedCard);
+      this.openEditModal(selectedCard)
     }
   },
  computed: {

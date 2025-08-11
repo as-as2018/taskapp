@@ -1,5 +1,6 @@
 <template>
   <div
+  @click="()=>$emit('update',task)"
     class="bg-surface border border-border rounded-lg my-4 p-4 shadow-sm hover:shadow-md transition cursor-pointer"
   >
     <!-- Title & Status -->
