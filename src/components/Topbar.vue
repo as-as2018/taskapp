@@ -1,6 +1,8 @@
 <script>
 import { Icon } from '@iconify/vue';
-
+import { mapState,mapActions } from "pinia";
+import useThemeStore from '../stores/themeStore';
+useThemeStore
 export default {
   name: 'Topbar',
   props: {
@@ -9,14 +11,15 @@ export default {
   components: { Icon },
   emits: ['toggle-sidebar'],
   methods: {
-    toggleTheme() {
-      const appDiv = document.getElementById('vue-app');
-      console.log(appDiv);
+    ...mapActions(useThemeStore,['toggleTheme']),
+    // toggleTheme() {
+    //   const appDiv = document.getElementById('vue-app');
+    //   console.log(appDiv);
       
-      const currentTheme = appDiv.getAttribute('data-theme');
-      console.log(currentTheme);
-      appDiv.setAttribute('data-theme', currentTheme === 'light' ? 'dark' : 'light');
-    }
+    //   const currentTheme = appDiv.getAttribute('data-theme');
+    //   console.log(currentTheme);
+    //   appDiv.setAttribute('data-theme', currentTheme === 'light' ? 'dark' : 'light');
+    // }
   },
 
 }

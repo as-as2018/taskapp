@@ -1,6 +1,10 @@
 <script>
+import { computed } from 'vue';
 import SideMenu from './components/SideMenu.vue';
 import Topbar from './components/Topbar.vue';
+import { mapState } from 'pinia';
+import useThemeStore from './stores/themeStore';
+
 
 export default {
   name: 'App',
@@ -14,12 +18,15 @@ export default {
     toggleSidebar() {
       this.sidebarActive = !this.sidebarActive
     },
+  },
+  computed: {
+    ...mapState(useThemeStore,['theme'])
   }
 }
 </script>
 
 <template>
-  <div data-theme="light" id="vue-app">
+  <div :data-theme="theme||light" id="vue-app">
     <!-- Pass toggle event handler -->
     <Topbar :sidebarActive="sidebarActive"  @toggle-sidebar="toggleSidebar" />
 
