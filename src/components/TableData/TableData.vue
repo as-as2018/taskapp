@@ -100,8 +100,7 @@
               </span>
             </td>
             <td class="px-3 py-2 align-top">
-              <label class="inline-flex items-center gap-2">
-                <input type="checkbox" v-model="task.completed" @change="onToggleComplete(task)" />
+              <label class="inline-flex items-center gap-2">                
                 <span class="text-sm">{{ task?.status }}</span>
               </label>
             </td>
@@ -212,10 +211,6 @@ export default {
         this.sortBy = field;
         this.sortDir = 1;
       }
-    },
-    onToggleComplete(task) {
-      const updated = { ...task, completed: !!task.completed };
-      this.$emit("task-updated", updated);
     },
     openEdit(task) {  
       this.$emit("edit-task", task);
