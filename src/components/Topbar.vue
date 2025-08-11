@@ -1,7 +1,7 @@
 <script>
 import { Icon } from '@iconify/vue';
 import { mapState,mapActions } from "pinia";
-import useThemeStore from '../stores/themeStore';
+import useThemeStore from '@stores/themeStore';
 useThemeStore
 export default {
   name: 'Topbar',

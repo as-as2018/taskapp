@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import BoardColumn from './BoardColumn.vue';
+import BoardColumn from '@components/kanbanboard/BoardColumn.vue';
 
 export default {
   name: "Board",

@@ -52,10 +52,10 @@
 </template>
 
 <script>
-import Board from "../components/kanbanboard/Board.vue";
-import TableData from "../components/TableData/TableData.vue";
-import TaskFormModal from "../components/TaskFormModal.vue";
-import  useTaskStore  from "../stores/taskStore";
+import Board from "@components/kanbanboard/Board.vue";
+import TableData from "@components/TableData/TableData.vue";
+import TaskFormModal from "@components/TaskFormModal.vue";
+import  useTaskStore  from "@stores/taskStore";
 import { mapState,mapActions } from "pinia";
 
 

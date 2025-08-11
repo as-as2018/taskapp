@@ -1,9 +1,9 @@
 <script>
 import { computed } from 'vue';
-import SideMenu from './components/SideMenu.vue';
-import Topbar from './components/Topbar.vue';
+import SideMenu from '@components/SideMenu.vue';
+import Topbar from '@components/Topbar.vue';
 import { mapState } from 'pinia';
-import useThemeStore from './stores/themeStore';
+import useThemeStore from '@stores/themeStore';
 
 
 export default {

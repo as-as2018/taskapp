@@ -138,7 +138,7 @@
 <script>
 import useVuelidate from "@vuelidate/core";
 import { required, minLength } from "@vuelidate/validators";
-import { commaSeparated, minWords } from "../validators/validators";
+import { commaSeparated, minWords } from "@validators/validators";
 
 
 export default {

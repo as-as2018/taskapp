@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import StateCard from '../components/StateCard.vue';
+import StateCard from '@components/StateCard.vue';
 
 export default {
   name: 'StatsView',

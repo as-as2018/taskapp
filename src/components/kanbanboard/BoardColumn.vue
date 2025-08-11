@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import BoardCard from "./BoardCard.vue";
+import BoardCard from "@components/kanbanboard/BoardCard.vue";
 
 export default {
   name: "Column",

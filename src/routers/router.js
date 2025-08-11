@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
-import DashboardView from "../Views/DashboardView.vue";
-import TaskView from "../Views/TaskView.vue";
-import App from "../App.vue";
+import DashboardView from "@Views/DashboardView.vue";
+import TaskView from "@Views/TaskView.vue";
 
 const routes = [
   {
