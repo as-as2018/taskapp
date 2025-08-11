@@ -24,7 +24,10 @@
     <!-- Due Date & Priority -->
     <div class="flex justify-between items-center mt-3">
       <div class="text-xs text-text-secondary">
-        📅 {{ formattedDueDate }}
+        📅 Due Date: {{ formatDate(task?.dueDate) }}
+      </div>
+      <div class="text-xs text-text-secondary">
+        📅 Created: {{ formatDate(task?.dueDate) }}
       </div>
       <span
         class="text-xs px-2 py-1 rounded-full"
@@ -66,6 +69,16 @@ export default {
       }
     }
   },
+  methods:{
+      formatDate(d) {
+      if (!d) return "-";
+      try {
+        return new Date(d).toLocaleDateString();
+      } catch {
+        return d;
+      }
+    },
+  },
   computed: {
     priorityClasses() {
       switch (this.task.priority) {
@@ -84,13 +97,6 @@ export default {
         ? "bg-green-100 text-green-700"
         : "bg-gray-200 text-gray-700";
     },
-    formattedDueDate() {
-      try {
-        return new Date(this.task.dueDate).toLocaleDateString();
-      } catch {
-        return this.task.dueDate;
-      }
-    }
   }
 };
 </script>
