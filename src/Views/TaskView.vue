@@ -55,9 +55,9 @@
 import Board from "@components/kanbanboard/Board.vue";
 import TableData from "@components/TableData/TableData.vue";
 import TaskFormModal from "@components/TaskFormModal.vue";
-import  useTaskStore  from "@stores/TaskStore";
-import { mapState,mapActions } from "pinia";
-
+import useTaskStore from "@stores/TaskStore";
+import { mapState, mapActions } from "pinia";
+import { useWebNotification } from "@vueuse/core";
 
 export default {
   components: { Board, TableData, TaskFormModal },
@@ -65,54 +65,78 @@ export default {
     return {
       view: "board",
       showModal: false,
-      // selectedTask: null,
     };
   },
+  setup() {
+    const { isSupported, show } = useWebNotification();
+
+    const sendNotification = (title, body) => {
+      if (!isSupported.value) {
+        console.warn("Notifications not supported in this browser.");
+        return;
+      }
+      show({
+        title,
+        body,
+        icon: "/icons/task.png", // optional icon
+      });
+    };
+
+    return { sendNotification };
+  },
   methods: {
-    ...mapActions(useTaskStore, ['loadTasks', 'setTasks', 'setSelectedTask','resetSelectedTask', 'updateTask','deleteTask', 'deleteTask', 'moveTask']),
+    ...mapActions(useTaskStore, [
+      "loadTasks",
+      "setTasks",
+      "setSelectedTask",
+      "resetSelectedTask",
+      "updateTask",
+      "deleteTask",
+      "moveTask"
+    ]),
+
     openCreateModal() {
       this.selectedTask = null;
       this.showModal = true;
     },
+
     openEditModal(task) {
-      console.log('Editing task:', task);
       this.setSelectedTask(task);
-      // this.selectedTask = task;
       this.showModal = true;
     },
-    closeModal(){
-      this.showModal = false
-      this.resetSelectedTask()
+
+    closeModal() {
+      this.showModal = false;
+      this.resetSelectedTask();
     },
 
     handleSaveTask(task) {
       this.setTasks(task);
-      console.log('Task saved:', task);
+      this.sendNotification("Task Added ✅", `Task "${task.title}" has been created.`);
       this.showModal = false;
     },
+
     handleTaskUpdated(task) {
-      console.log('Task updated:', task);
       task && this.updateTask(task);
+      this.sendNotification("Task Updated ✏️", `Task "${task.title}" has been updated.`);
       this.showModal = false;
-      
     },
+
     handleTaskDeleted(task) {
-      console.log('Task deleted:', task);
       task.id && this.deleteTask(task.id);
-      
+      this.sendNotification("Task Deleted 🗑️", `Task "${task.title}" has been removed.`);
     },
+
     updateColumns(selectedCard) {
-      // Handle column updates if needed
-      console.log('Columns updated:', selectedCard);
-      this.openEditModal(selectedCard)
+      this.openEditModal(selectedCard);
     }
   },
- computed: {
-    ...mapState(useTaskStore, ['tasks','selectedTask']),
+  computed: {
+    ...mapState(useTaskStore, ["tasks", "selectedTask"]),
   },
   beforeMount() {
     this.loadTasks();
-  },  
- 
+  }
 };
 </script>
+
