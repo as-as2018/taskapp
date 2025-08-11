@@ -109,6 +109,9 @@ const useTaskStore = defineStore("task", {
     setSelectedTask(task) {
       this.selectedTask = task;
     },
+    resetSelectedTask(){
+      this.selectedTask = null;
+    },
     updateTask(updatedTask) {
       console.log("Updating task:", updatedTask);
        const index = this.tasks.findIndex(task => task.id === updatedTask.id)

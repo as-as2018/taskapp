@@ -45,7 +45,7 @@
     <TaskFormModal
       :visible="showModal"
       :task="selectedTask"
-      @close="showModal = false"
+      @close="closeModal"
       @update="handleTaskUpdated"
       @save="handleSaveTask"
     />
@@ -69,7 +69,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(useTaskStore, ['loadTasks', 'setTasks', 'setSelectedTask','updateTask','deleteTask', 'deleteTask', 'moveTask']),
+    ...mapActions(useTaskStore, ['loadTasks', 'setTasks', 'setSelectedTask','resetSelectedTask', 'updateTask','deleteTask', 'deleteTask', 'moveTask']),
     openCreateModal() {
       this.selectedTask = null;
       this.showModal = true;
@@ -80,6 +80,11 @@ export default {
       // this.selectedTask = task;
       this.showModal = true;
     },
+    closeModal(){
+      this.showModal = false
+      this.resetSelectedTask()
+    },
+
     handleSaveTask(task) {
       this.setTasks(task);
       console.log('Task saved:', task);
@@ -87,7 +92,7 @@ export default {
     },
     handleTaskUpdated(task) {
       console.log('Task updated:', task);
-      // task && this.updateTask(task);
+      task && this.updateTask(task);
       this.showModal = false;
       
     },

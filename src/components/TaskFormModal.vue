@@ -212,6 +212,12 @@ export default {
       if (this.v$.$invalid) return;
 
       if (this.form.id) {
+        this.form.tags = this.form.tags
+          ? this.form.tags.split(",").map(tag => tag.trim())
+          : [];
+
+          console.log("task::update", this.form);
+          
         this.$emit("update", this.form);
       } else {
         this.form.tags = this.form.tags
